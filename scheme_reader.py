@@ -134,7 +134,7 @@ def scheme_read(src):
     elif val not in DELIMITERS:
         return val
     elif val == "'":
-        "*** YOUR CODE HERE ***"
+        return Pair('quote', Pair(scheme_read(src),nil))
     elif val == "(":
         return read_tail(src)
     else:
@@ -166,7 +166,14 @@ def read_tail(src):
         if src.current() == ")":
             src.pop()
             return nil
-        "*** YOUR CODE HERE ***"
+        if src.current() == ".":
+            src.pop()
+            a = scheme_read(src)
+            if src.current() == ")":
+                src.pop()
+                return a
+            else:
+                raise SyntaxError("More than one element after dot")
         first = scheme_read(src)
         rest = read_tail(src)
         return Pair(first, rest)
