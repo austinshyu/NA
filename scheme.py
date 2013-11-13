@@ -27,12 +27,10 @@ def scheme_eval(expr, env):
         return env.lookup(expr)
     elif scheme_atomp(expr) or scheme_stringp(expr) or expr is okay:
         return expr
-
     # All non-atomic expressions are lists.
     if not scheme_listp(expr):
         raise SchemeError("malformed list: {0}".format(str(expr)))
     first, rest = expr.first, expr.second
-
     # Evaluate Combinations
     if (scheme_symbolp(first) # first might be unhashable
         and first in LOGIC_FORMS):
