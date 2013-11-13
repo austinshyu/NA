@@ -76,12 +76,12 @@ def apply_primitive(procedure, args, env):
     """
     try:
         arg_list = []
-        while len(args) > 0:
+        while len(args) > 0:   # This while loop append every element in args into arg_list
             arg_list.append(args.first)
             args = args.second
-        if procedure.use_env:
+        if procedure.use_env:   # If procedure includes environment, append it as the last element of arg_list
             arg_list.append(env)
-        return procedure.fn(*arg_list)
+        return procedure.fn(*arg_list)   # Apply function with list of arguments(arg_list)
     except TypeError:
         raise SchemeError("Scheme error is raised")
 
@@ -106,9 +106,9 @@ class Frame:
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL.  Errors if SYMBOL is not found."""
-        if symbol in self.bindings:
+        if symbol in self.bindings:   # If symbol already exists as key in bindings dictionary, return its value.
             return self.bindings[symbol]
-        elif self.parent is not None:
+        elif self.parent is not None:   # If there exists parent frame, look up the parent frame.
             return lookup(self.parent,symbol)
         raise SchemeError("unknown identifier: {0}".format(str(symbol)))
 
@@ -211,7 +211,9 @@ def do_define_form(vals, env):
     target = vals[0]
     if scheme_symbolp(target):
         check_form(vals, 2, 2)
-        "*** YOUR CODE HERE ***"
+        value = scheme_eval(vals.second.first,env)   # Evaluate expression which should be bound to target
+        env.define(target,value)   # Add target and the value in the binding of env
+        return target
     elif isinstance(target, Pair):
         "*** YOUR CODE HERE ***"
     else:
