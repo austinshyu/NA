@@ -194,7 +194,12 @@ def do_lambda_form(vals, env):
     check_form(vals, 2)
     formals = vals[0]
     check_formals(formals)
-    "*** YOUR CODE HERE ***"
+    if len(vals) > 2:   # Check if multiple expressions are given as body of lambda expression
+        body = Pair('begin',vals.second)
+    else:   # If one expression is given as body of lambda expression
+        body = vals.second.first
+    return LambdaProcedure(formals,body,env)   # Create a LambdaProcedure instance
+
 
 def do_mu_form(vals):
     """Evaluate a mu form with parameters VALS."""
@@ -292,7 +297,10 @@ def do_cond_form(vals, env):
 def do_begin_form(vals, env):
     """Evaluate begin form with parameters VALS in environment ENV."""
     check_form(vals, 1)
-    "*** YOUR CODE HERE ***"
+    while len(vals) > 1:
+        scheme_eval(vals.first,env)
+        vals = vals.second
+    return vals.first
 
 LOGIC_FORMS = {
         "and": do_and_form,
