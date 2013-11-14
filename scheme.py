@@ -218,7 +218,13 @@ def do_define_form(vals, env):
         env.define(target,value)   # Add target and the value in the binding of env
         return target
     elif isinstance(target, Pair):
-        "*** YOUR CODE HERE ***"
+        target = vals.first.first
+        if scheme_symbolp(target):
+            value = scheme_eval(Pair('lambda', Pair(vals.first.second,vals.second)),env)
+            env.define(target,value)
+            return target
+        else:
+             raise SchemeError("bad argument to define")
     else:
         raise SchemeError("bad argument to define")
 
