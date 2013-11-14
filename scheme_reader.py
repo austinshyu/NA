@@ -170,6 +170,7 @@ def read_tail(src):
             src.pop()   # Remove dot
             a = scheme_read(src)   # Read the expression after the dot. ('a' is bound to the first element after the dot.)
             if src.current() == ")":   # When only one element follows after dot
+                src.pop()
                 return a
             else:
                 raise SyntaxError("More than one element after dot")   # Raise an error if more than one element follow the dot
