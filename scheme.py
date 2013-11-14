@@ -130,7 +130,12 @@ class Frame:
         <{a: 1, b: 2, c: 3} -> <Global Frame>>
         """
         frame = Frame(self)
-        "*** YOUR CODE HERE ***"
+        i = 0
+        while i < len(formals):
+            frame.bindings[formals[i]] = vals[i]   # Bind formals and vals in the binging of frame  
+            i += 1
+        if len(formals) != len(vals):   # Check if different number of formals and vals are given
+            raise SchemeError("Different number of formal parameters and arguments are received")
         return frame
 
     def define(self, sym, val):
