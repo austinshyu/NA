@@ -343,6 +343,9 @@ def check_formals(formals):
     >>> check_formals(read_line("(a b c)"))
     """
     "*** YOUR CODE HERE ***"
+    formal_list = []
+    while formals != nil:
+        
 
 ##################
 # Tail Recursion #
