@@ -342,7 +342,17 @@ def check_formals(formals):
 
     >>> check_formals(read_line("(a b c)"))
     """
-    "*** YOUR CODE HERE ***"
+    if not scheme_listp(formals):
+        raise SchemeError("Not a well-formed list")
+    formals_lst = []
+    i = 0
+    while i < len(formals):
+        if not scheme_symbolp(formals[i]):
+            raise SchemeError("List must contain only symbols")
+        if formals[i] in formals_lst:
+            raise SchemeError("Symbol is repeated")
+        formals_lst.append(formals[i])
+        i += 1
 
 ##################
 # Tail Recursion #
