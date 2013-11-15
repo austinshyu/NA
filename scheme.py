@@ -54,10 +54,12 @@ def scheme_eval(expr, env):
 
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS in environment ENV."""
+    
     if isinstance(procedure, PrimitiveProcedure):
         return apply_primitive(procedure, args, env)
     elif isinstance(procedure, LambdaProcedure):
-        "*** YOUR CODE HERE ***"
+        frame1 = procedure.env.make_call_frame(procedure.formals, args)
+        return scheme_eval(procedure.body, frame1)
     elif isinstance(procedure, MuProcedure):
         "*** YOUR CODE HERE ***"
     else:
@@ -107,7 +109,7 @@ class Frame:
         if symbol in self.bindings:   # If symbol already exists as key in bindings dictionary, return its value.
             return self.bindings[symbol]
         elif self.parent is not None:   # If there exists parent frame, look up the parent frame.
-            return lookup(self.parent,symbol)
+            return Frame.lookup(self.parent,symbol)
         raise SchemeError("unknown identifier: {0}".format(str(symbol)))
 
 
@@ -342,12 +344,7 @@ def check_formals(formals):
 
     >>> check_formals(read_line("(a b c)"))
     """
-<<<<<<< HEAD
-    "*** YOUR CODE HERE ***"
-    formal_list = []
-    while formals != nil:
-        
-=======
+    "*** YOUR CODE HERE ***"        
     if not scheme_listp(formals):
         raise SchemeError("Not a well-formed list")
     formals_lst = []
@@ -359,7 +356,6 @@ def check_formals(formals):
             raise SchemeError("Symbol is repeated")
         formals_lst.append(formals[i])
         i += 1
->>>>>>> 283f31c359d63ce7c1e0bad007e4db8b5ae9a8b3
 
 ##################
 # Tail Recursion #
