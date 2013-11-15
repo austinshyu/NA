@@ -323,7 +323,12 @@ def do_cond_form(vals, env):
         else:
             test = scheme_eval(clause.first, env)
         if scheme_true(test):
-            "*** YOUR CODE HERE ***"
+            if len(clause.second) == 0:   # If body of cond case is empty, evaluates the predicate
+                return scheme_eval(test,env)
+            if len(clause.second) > 1:   # If body contains multiple expressions, replace the body with begin form
+                clause.second = Pair('begin',clause.second)
+                return scheme_eval(clause.second,env)
+            return scheme_eval(clause.second.first,env)   # Otherwise, evaluate the body of cond case.
     return okay
 
 def do_begin_form(vals, env):
