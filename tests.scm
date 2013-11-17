@@ -8,6 +8,130 @@
 
 ;;; *** Add more of your own here! ***
 
+(modulo 20 3)
+; expect 2
+
+(equal? (+ 14 5 1) (* 4 5))
+; expect True
+
+(integer? (- 21 3 7) (/ 3 0))
+; expect Error
+
+(define a 30)
+; expect a
+
+(define a (* 10 2 (+ a 20)))
+; expect a
+
+a
+; expect 1000
+
+'(/ 1 0)
+; expect (/ 1 0)
+
+(cons 1(cons 2 '(3 4)))
+; expect (1 2 3 4)
+
+(define x '(1 3 '(5 7 9) 11 13))
+; expect x
+
+(car (cdr (cdr x)))
+; expect (quote (5 7 9))
+
+(cons 1(cons nil (cons 2 nil)))
+; expect (1 () 2)
+
+(begin (quotient 18 7) '(a b c) (/ 2 (- 3 3)))
+; expect Error
+
+(begin (+ 3 (* 4 5)) 'hi 'there)
+; expect there
+
+(lambda (f) (/ f 0))
+; expect (lambda (f) (/ f 0))
+
+(lambda (a b c) (+ a (floor(b c))))
+; expect (lambda (a b c) (+ a (floor (b c))))
+
+(lambda (x y) (cons x(cons y nil)) (* x (/ y y)))
+; expect (lambda (x y) (begin (cons x (cons y ())) (* x (/ y y))))
+
+(define (adder x a b) (+ x a b))
+; expect adder
+
+adder
+; expect (lambda (x a b) (+ x a b))
+
+(adder 2 5 7 8)
+; expect Error
+
+(define (multiplier x x y z) (* x x y z))
+; expect Error
+
+(define test_func (lambda (a b c) (* a (* b (* c 2)))))
+; expect test_func
+
+(test_func 1 2 3)
+; expect 12
+
+(if (< (* 3 4) (+ 10 1)) true false)
+; expect False
+
+(if (= (adder 2 3 7) (test_func 1 2 3)) (if (= 3 2) 'works 'fine) false)
+; expect fine
+
+(if (= (- 10 6) (+ 2 5)) true (if (odd? 8) true))
+; expect okay
+
+
+
+
+(cond ((number? 3) 'yay (/ 5 0) 'yes)
+      ((= (+ 2 8) (* 5 2))
+      (else 'test)))
+; expect Error
+
+(cond ((< 3 5))
+      ((= 20 (* 4 5))
+      ('all_true)))
+; expect True
+
+(cond ((integer? 2.4) (/ 1 0) 'no)
+      ('this_get_printed))
+; expect this_get_printed
+
+(cond ((= 3 7))
+      ((< 2 1)))
+; expect okay
+
+(define a 10)
+; expect a
+
+(define b 20)
+; expect b
+
+(let ((a 'this_is)
+      (b 'a_test))
+  (cons a(cons b nil)))
+; expect (this_is a_test)
+
+(number? a)
+; expect True
+
+(let ((a adder))
+  (a 1 2 3))
+; expect 6
+
+(a 4 5 b)
+; expect Error
+
+(let ((b test_func))
+  a
+  'hi
+  (b a 2 3))
+; expect 120
+
+
 ;;; These are examples from several sections of "The Structure
 ;;; and Interpretation of Computer Programs" by Abelson and Sussman.
 
