@@ -282,10 +282,13 @@ def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
     "*** YOUR CODE HERE ***"
     all_true = True
-    while vals != nil and all_true == True:
-        all_true = scheme_true(vals.first)
-        vals = vals.second
-    return all_true 
+    i  = 0
+    if vals == nil: # Check if no arguments
+        return True
+    while i < len(vals) and all_true == True: # Iterate through values
+        all_true = scheme_true(vals[i])
+        i +=1
+    return vals[i-1] # Return last value of list, or return false value
 
 def quote(value):
     """Return a Scheme expression quoting the Scheme VALUE.
@@ -303,12 +306,12 @@ def do_or_form(vals, env):
     "*** YOUR CODE HERE ***"
     one_true = False
     i = 0
-    if vals ==nil:
+    if vals ==nil: # Check if no arguments
         return False
-    while i < len(vals)and one_true == False:
+    while i < len(vals)and one_true == False: # Iterate through values
         one_true = scheme_true(vals[i])
         i+=1
-    return vals[i-1]
+    return vals[i-1] # Return first true value, or return last value
 
 
 def do_cond_form(vals, env):
