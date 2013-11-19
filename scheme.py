@@ -292,7 +292,7 @@ def do_and_form(vals, env):
     if vals == nil: # Check if no arguments
         return True
     while i < len(vals) and all_true == True: # Iterate through values
-        all_true = scheme_true(scheme_eval(vals[i],eval))
+        all_true = scheme_true(scheme_eval(vals[i],env))
         i +=1
     return vals[i-1] # Return last value of list, or return false value
 
