@@ -66,7 +66,21 @@
 ;; be at most MAX-VALUE and there are at most MAX-PIECES partitions.
 (define (list-partitions total max-pieces max-value)
   ; *** YOUR CODE HERE ***
-  nil)
+  (define (partitions perm total max-pieces max-value)
+      (define change-value (partitions perm total max-pieces (- max-value 1)))
+                     (cond ((equal? total 0) (list perm))
+                       ((or (< total 0) (= max-pieces 0) (<= max-value 0)) '())
+                       ((> total max-value) (append (partitions (append perm (list max-value)) (- total max-value) (- max-pieces 1) max-value) 
+                       (partitions perm total max-pieces (- max-value 1))))
+                       (else (partitions perm total max-pieces (- max-value 1)))
+                       
+                       
+                       ))
+
+  (partitions '() total max-pieces max-value))
+
+
+
 
 ; Problem 19 tests rely on correct Problem 18.
 (sort-lists (list-partitions 5 2 4))
