@@ -65,8 +65,14 @@
 ;; A list of all ways to partition TOTAL, where  each partition must
 ;; be at most MAX-VALUE and there are at most MAX-PIECES partitions.
 (define (list-partitions total max-pieces max-value)
+<<<<<<< HEAD
   ; *** YOUR CODE HERE ***
   
+=======
+  (helper total max-pieces max-value nil)
+  )
+
+>>>>>>> 0cf12fd44fe0712a374cc975b959babc52805daa
 (define (helper total max-pieces max-value possible-partitions)
         (cond ((= total 0) (list possible-partitions))
               ((< total 0) nil)
