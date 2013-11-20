@@ -291,11 +291,13 @@ def do_and_form(vals, env):
     i  = 0
     if vals == nil: # Check if no arguments
         return True
-    while i < len(vals) and all_true == True: # Iterate through values
+    while i < (len(vals) - 1) and all_true == True: # Iterate through values
         all_true = scheme_true(scheme_eval(vals[i],env))
         i +=1
-    return vals[i-1] # Return last value of list, or return false value
-
+    if all_true == False:
+        return False
+    return vals[i] # Return last value of list, or return false value
+    
 def quote(value):
     """Return a Scheme expression quoting the Scheme VALUE.
 
@@ -312,13 +314,14 @@ def do_or_form(vals, env):
     "*** YOUR CODE HERE ***"
     one_true = False
     i = 0
-    if vals ==nil: # Check if no arguments
+    if vals == nil: # Check if no arguments
         return False
-    while i < len(vals)and one_true == False: # Iterate through values
+    while i < (len(vals) - 1) and one_true == False: # Iterate through values
         one_true = scheme_true(scheme_eval(vals[i],env))
         i+=1
-    return vals[i-1] # Return first true value, or return last value
-
+        if one_true == True:
+            return Pair('quote',Pair(scheme_eval(vals[i-1],env),nil))  # Return first true value, or return last value
+    return vals[i]
 
 def do_cond_form(vals, env):
     """Evaluate cond form with parameters VALS in environment ENV."""
