@@ -217,7 +217,7 @@ def do_mu_form(vals):
     check_formals(formals)
     "*** YOUR CODE HERE ***"
     body = vals[1]
-    if len(vals) > 2: #
+    if len(vals) > 2: 
         body = Pair('begin', vals.second) 
     return MuProcedure(formals, body)
 
@@ -287,16 +287,10 @@ def do_if_form(vals, env):
 def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
     "*** YOUR CODE HERE ***"
+    i = 0
+    all_true = True
     if len(vals) == 0:
         return True
-<<<<<<< HEAD
-    for val in vals:
-        return_val = scheme_eval(val, env)
-        if scheme_false(return_val):
-            return False
-    return vals[len(vals)-1]# Return last value of list, or return false value
-
-=======
     while i < (len(vals) - 1) and all_true == True: # Iterate through values
         all_true = scheme_true(scheme_eval(vals[i],env))
         i +=1
@@ -304,7 +298,6 @@ def do_and_form(vals, env):
         return False
     return vals[i] # Return last value of list, or return false value
     
->>>>>>> 55d78af32a2ae30b4aca8b0ad242abb60b6357d5
 def quote(value):
     """Return a Scheme expression quoting the Scheme VALUE.
 
@@ -319,14 +312,6 @@ def quote(value):
 def do_or_form(vals, env):
     """Evaluate short-circuited or with parameters VALS in environment ENV."""
     "*** YOUR CODE HERE ***"
-<<<<<<< HEAD
-    if len(vals) == 0:
-        return False
-    for val in vals:
-        return_val = scheme_eval(val,env)
-        if scheme_true 
-
-=======
     one_true = False
     i = 0
     if vals == nil: # Check if no arguments
@@ -337,7 +322,6 @@ def do_or_form(vals, env):
         if one_true == True:
             return Pair('quote',Pair(scheme_eval(vals[i-1],env),nil))  # Return first true value, or return last value
     return vals[i]
->>>>>>> 55d78af32a2ae30b4aca8b0ad242abb60b6357d5
 
 def do_cond_form(vals, env):
     """Evaluate cond form with parameters VALS in environment ENV."""
@@ -436,6 +420,9 @@ def scheme_optimized_eval(expr, env):
         if (scheme_symbolp(first) # first might be unhashable
             and first in LOGIC_FORMS):
             "*** YOUR CODE HERE ***"
+            expr = LOGIC_FORMS[first](rest, env)
+
+
         elif first == "lambda":
             return do_lambda_form(rest, env)
         elif first == "mu":
@@ -446,8 +433,24 @@ def scheme_optimized_eval(expr, env):
             return do_quote_form(rest)
         elif first == "let":
             "*** YOUR CODE HERE ***"
+            expr, env = do_let_form(rest, env)
+
+
         else:
             "*** YOUR CODE HERE ***"
+
+
+            proc = scheme_optimized_eval(first, env)
+            args = rest.map(lambda operation: scheme_optimized_eval(operation, env))
+            if isinstance(proc, PrimitiveProcedure):
+                return apply_primitive(proc, args, env)
+            elif isinstance(proc, LambdaProcedure):
+                env = proc.env.make_call_frame(proc.formals, args)
+            elif isinstance(proc, MuProcedure):
+                env = env.make_call_frame(proc.formals, args)
+            else:
+                raise SchemeError("Cannot call {0}".format(str(proc)))
+            expr = proc.body
 
 ################################################################
 # Uncomment the following line to apply tail call optimization #
