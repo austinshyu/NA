@@ -8,6 +8,46 @@
 
 ;;; *** Add more of your own here! ***
 
+(or (/1 0) #t)
+; expect Error
+
+(or #t 5)
+; expect True
+
+(or True 5)
+; expect True
+
+(and True #f)
+; expect False
+
+(and (and 5 2) (/1 0))
+; Expect Error
+
+(or 1)
+; expect 1
+
+(or #f)
+; expect False
+
+(or #t)
+; expect True
+
+(and #f)
+; expect False
+
+(and (= 2 2) (> 2 1))
+; expect True
+
+(or #f #t #t 5 2 3 4 5 2 1 23 4)
+; expect True
+
+(and (or #t (/ 1 0)) #f #t)
+; expect False
+
+(and (and (and #t (or #f #t)) (or #f #t #f)) (and #t (or #t (and #f #t))))
+
+
+
 (modulo 20 3)
 ; expect 2
 
@@ -30,7 +70,7 @@ a
 ; expect (/ 1 0)
 
 (cons 1(cons 2 '(3 4)))
-; expect (1 2 3 4)
+; (expect (1 2 3 4)
 
 (define x '(1 3 '(5 7 9) 11 13))
 ; expect x
@@ -651,6 +691,14 @@ one-through-four
 (if (and #f (/ 1 0)) 2 3)
 ; expect 3
 
+(or (/1 0) #t)
+; expect Error
+
+(or #t 5)
+; expect #t
+
+(or True 5)
+; expect #t
 
 
 
