@@ -18,6 +18,13 @@
       (op (car sequence)
           (accumulate op initial (cdr sequence)))))
 
+(define (plus m xs)
+  (map (lambda (x) (+ m x)) xs))
+
+(define (flatten x)
+  (cond ((null? x) '())
+        ((pair? x) (append (flatten (car x)) (flatten (cdr x))))
+        (else (list x))))
 ; Problem 18
 
 ;; Merge two lists LIST1 and LIST2 according to COMP and return
@@ -126,8 +133,47 @@
 ;; possible path from root to leaf.
 (define (tree-sums tree)
   ; *** YOUR CODE HERE ***
-  nil)
+    (cond ((equal? tree nil) '())
+    ((equal? (children tree) nil) (entry tree))
+         (else (plus (entry tree) (flatten (tree-to-list (children tree)))) 
+         )))
 
+
+
+(define (tree-to-list tree-set)
+    (cond ((null? tree-set)  '())
+
+          ((and (number? (entry tree-set)) (null? (children tree-set)) ) (entry tree-set))
+          ((and (number? (entry tree-set)) (null? (children (children tree-set))))
+                
+                (+ (entry tree-set) (entry (entry (children tree-set))))
+                
+                )
+          ((and (number? (entry tree-set)) (null? (entry (children tree-set))))
+                (+ (entry tree-set) (entry (entry (children (children tree-set))))))
+          ((null? (children (children (entry tree-set))))
+                (list 
+                (+ (entry (entry tree-set)) (tree-to-list (entry (children (entry tree-set))))) 
+                (tree-to-list  (children tree-set))
+                ))
+
+          ((null? (children (entry tree-set)))  
+                (list  
+                (+ (entry (entry tree-set)) (tree-to-list (entry (children (children (entry tree-set))))))
+                (tree-to-list (children tree-set))
+                ))
+          
+          (else
+                (list 
+                (+ (entry (entry tree-set))  (tree-to-list (entry (children (entry tree-set)))))
+                (+ (entry (entry tree-set)) (tree-to-list (entry (children (children (entry tree-set))))))
+                (tree-to-list (children tree-set))
+                ))
+     ))
+                
+;test                
+;(display (tree-to-list (children tree)))
+    
 (tree-sums tree)
 ; expect (20 19 13 16 11)
 
