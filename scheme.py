@@ -289,12 +289,22 @@ def do_and_form(vals, env):
     "*** YOUR CODE HERE ***"
     if len(vals) == 0:
         return True
+<<<<<<< HEAD
     for val in vals:
         return_val = scheme_eval(val, env)
         if scheme_false(return_val):
             return False
     return vals[len(vals)-1]# Return last value of list, or return false value
 
+=======
+    while i < (len(vals) - 1) and all_true == True: # Iterate through values
+        all_true = scheme_true(scheme_eval(vals[i],env))
+        i +=1
+    if all_true == False:
+        return False
+    return vals[i] # Return last value of list, or return false value
+    
+>>>>>>> 55d78af32a2ae30b4aca8b0ad242abb60b6357d5
 def quote(value):
     """Return a Scheme expression quoting the Scheme VALUE.
 
@@ -309,12 +319,25 @@ def quote(value):
 def do_or_form(vals, env):
     """Evaluate short-circuited or with parameters VALS in environment ENV."""
     "*** YOUR CODE HERE ***"
+<<<<<<< HEAD
     if len(vals) == 0:
         return False
     for val in vals:
         return_val = scheme_eval(val,env)
         if scheme_true 
 
+=======
+    one_true = False
+    i = 0
+    if vals == nil: # Check if no arguments
+        return False
+    while i < (len(vals) - 1) and one_true == False: # Iterate through values
+        one_true = scheme_true(scheme_eval(vals[i],env))
+        i+=1
+        if one_true == True:
+            return Pair('quote',Pair(scheme_eval(vals[i-1],env),nil))  # Return first true value, or return last value
+    return vals[i]
+>>>>>>> 55d78af32a2ae30b4aca8b0ad242abb60b6357d5
 
 def do_cond_form(vals, env):
     """Evaluate cond form with parameters VALS in environment ENV."""
